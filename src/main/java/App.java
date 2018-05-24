@@ -21,9 +21,9 @@ public class App {
                 String gameAction = bufferedReader.readLine().toLowerCase();
                 if (gameAction.equals("deal")) {
                     newGame.setDeck();
-                    newGame.dealCard(0, "Player");
-                    newGame.dealCard(20, "dealer");
-                    newGame.dealCard(12, "Player");
+                    newGame.dealCard(newGame.generateRandomNumber(), "Player");
+                    newGame.dealCard(newGame.generateRandomNumber(), "dealer");
+                    newGame.dealCard(newGame.generateRandomNumber(), "Player");
                     newGame.dealCard(newGame.generateRandomNumber(), "dealer");
 
                     boolean betting = true;
@@ -74,7 +74,7 @@ public class App {
                         while (inPlay) {
 
                             if(hands.size() == 2){
-                                System.out.println("Here's your hand: ");
+                                System.out.println(String.format("Here's %s hand: ", currentHand));
                                 for (Object card : hand) {
                                     System.out.print(String.format("[%s]", card));
                                 }
@@ -91,8 +91,6 @@ public class App {
                                     System.out.println(String.format("[%s]", newGame.getDealerHand().get(i)));
                                 }
                                 boolean hitting = false;
-
-
                                 boolean choosing = true;
                                 while(choosing){
                                     System.out.println(String.format("This hand's score is %d. What would you like to do?", newGame.evaluateHand(currentHand)));
@@ -112,7 +110,7 @@ public class App {
 
                                 while(hitting){
                                     newGame.dealCard(newGame.generateRandomNumber(), currentHand);
-                                    System.out.println("Here's your hand: ");
+                                    System.out.println(String.format("Here's %s hand: ", currentHand));
                                     for (Object card : hand) {
                                         System.out.print(String.format("[%s]", card));
                                     }
@@ -131,6 +129,7 @@ public class App {
                                             if(playerAction2.equals("stay")){
                                                 hitting =false;
                                                 choosing = false;
+                                                inPlay=false;
                                             }else if (playerAction2.equals("hit")){
                                                 choosing = false;
                                             }else {
@@ -188,7 +187,7 @@ public class App {
                                 } else if(result.equals("draw")){
                                     System.out.println(String.format("%s hand didn't win but didn't lose either!", currentHand));
                                 } else {
-                                    System.out.println(String.format("%s Loses!", currentHand));
+                                    System.out.println(String.format("%s hand Loses!", currentHand));
                                     playerBank -= playerBet;
                                 }
                             }
