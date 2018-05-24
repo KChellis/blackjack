@@ -10,7 +10,7 @@ public class Game {
     private List<String> dealerHand = new ArrayList<>();
     private List<String> playerHand = new ArrayList<>();
     private List<String> secondHand = new ArrayList<>();
-    private int bank = 100;
+
 
 
     public List<String> getDeck() {
@@ -123,14 +123,6 @@ public class Game {
         }else {
             return false;
         }
-    }
-
-    public int getBank() {
-        return bank;
-    }
-
-    public void setBank(int bet) {
-        this.bank += bet;
     }
 
     public List<String> getSecondHand() {

@@ -169,19 +169,6 @@ public class GameTest {
     }
 
     @Test
-    public void getBank_returnsBankValue_100() {
-        Game testGame = new Game();
-        assertEquals(100, testGame.getBank());
-    }
-
-    @Test
-    public void setBank_ChangesBankValue_105() {
-        Game testGame = new Game();
-        testGame.setBank(5);
-        assertEquals(105, testGame.getBank());
-    }
-
-    @Test
     public void checkPair_returnsTrueIfPlayerHandIsPair_true() {
         Game testGame = new Game();
         testGame.setDeck();
