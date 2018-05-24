@@ -9,6 +9,7 @@ public class Game {
     private List<String> deck = new ArrayList<>();
     private List<String> dealerHand = new ArrayList<>();
     private List<String> playerHand = new ArrayList<>();
+    private List<String> secondHand = new ArrayList<>();
     private int bank = 100;
 
 
@@ -41,8 +42,10 @@ public class Game {
 
     public void dealCard(Integer randomNumber, String hand) {
         String card = this.deck.get(randomNumber);
-        if(hand.equals("player")){
+        if(hand.equals("Player")){
             this.playerHand.add(card);
+        } else if(hand.equals("Second")){
+            this.secondHand.add(card);
         }else {
             this.dealerHand.add(card);
         }
@@ -52,8 +55,11 @@ public class Game {
 
     public Integer evaluateHand(String hand){
         List<String> currentHand;
-        if(hand.equals("player")){
+        if(hand.equals("Player")){
             currentHand = this.playerHand;
+
+        } else if(hand.equals("Second")){
+            currentHand = this.secondHand;
 
         }else {
             currentHand = this.dealerHand;
@@ -84,8 +90,11 @@ public class Game {
 
     public boolean checkBlackjack(String hand){
         List<String> currentHand;
-        if(hand.equals("player")){
+        if(hand.equals("Player")){
             currentHand = this.playerHand;
+        }else if(hand.equals("Second")){
+            currentHand = this.secondHand;
+
         }else {
             currentHand = this.dealerHand;
         }
@@ -98,18 +107,18 @@ public class Game {
         }
     }
 
-    public String checkWin(){
-        if (this.evaluateHand("dealer") > this.evaluateHand("player") && this.evaluateHand("dealer") <= 21) {
+    public String checkWin(String hand){
+        if (this.evaluateHand("dealer") > this.evaluateHand(hand) && this.evaluateHand("dealer") <= 21) {
             return "lose";
-        } else if (this.evaluateHand("dealer") == this.evaluateHand("player")){
+        } else if (this.evaluateHand("dealer") == this.evaluateHand(hand)){
             return "draw";
         } else  {
             return "win";
         }
     }
 
-    public boolean checkBust() {
-        if (this.evaluateHand("player") > 21) {
+    public boolean checkBust(String hand) {
+        if (this.evaluateHand(hand) > 21) {
             return true;
         }else {
             return false;
@@ -122,5 +131,24 @@ public class Game {
 
     public void setBank(int bet) {
         this.bank += bet;
+    }
+
+    public List<String> getSecondHand() {
+        return secondHand;
+    }
+
+    public boolean checkPair(){
+        Character value1 = this.playerHand.get(0).charAt(0);
+        Character value2 = this.playerHand.get(1).charAt(0);
+        if (value1 == value2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void splitHand(){
+        this.secondHand.add(this.playerHand.get(0));
+        this.playerHand.remove(0);
     }
 }
