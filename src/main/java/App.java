@@ -51,13 +51,25 @@ public class App {
                             for (int i = 1; i < newGame.getDealerHand().size(); i++) {
                                 System.out.println(String.format("[%s]", newGame.getDealerHand().get(i)));
                             }
-                            System.out.println(String.format("Your score is %d. What would you like to do?", newGame.evaluateHand("player")));
-                            System.out.println("Hit or Stay");
-                            String playerAction = bufferedReader.readLine().toLowerCase();
                             boolean hitting = false;
-                            if(playerAction.equals("hit")){
-                                hitting = true;
+
+
+                            boolean choosing = true;
+                            while(choosing){
+                                System.out.println(String.format("Your score is %d. What would you like to do?", newGame.evaluateHand("player")));
+                                System.out.println("Hit or Stay");
+                                String playerAction = bufferedReader.readLine().toLowerCase();
+                                if(playerAction.equals("hit")){
+                                    hitting = true;
+                                    choosing = false;
+                                }else if (playerAction.equals("stay")){
+                                    choosing = false;
+                                }else {
+                                    System.out.println("I don't understand that command. Try Again");
+                                }
                             }
+
+
 
                             while(hitting){
                                 newGame.dealCard(newGame.generateRandomNumber(), "player");
@@ -72,12 +84,21 @@ public class App {
                                     inPlay = false;
                                     playerBank -= playerBet;
                                 }else {
-                                    System.out.println(String.format("Your score is %d. What would you like to do?", newGame.evaluateHand("player")));
-                                    System.out.println("Hit or Stay");
-                                    String playerAction2 = bufferedReader.readLine().toLowerCase();
-                                    if(playerAction2.equals("stay")){
-                                        hitting =false;
+                                    choosing = true;
+                                    while(choosing){
+                                        System.out.println(String.format("Your score is %d. What would you like to do?", newGame.evaluateHand("player")));
+                                        System.out.println("Hit or Stay");
+                                        String playerAction2 = bufferedReader.readLine().toLowerCase();
+                                        if(playerAction2.equals("stay")){
+                                            hitting =false;
+                                            choosing = false;
+                                        }else if (playerAction2.equals("hit")){
+                                            choosing = false;
+                                        }else {
+                                            System.out.println("I don't understand that command. Try Again");
+                                        }
                                     }
+
                                 }
                             }
                             System.out.println(String.format("The Dealer has %d: ", newGame.evaluateHand("dealer")));
@@ -119,13 +140,22 @@ public class App {
                         System.out.println("You are broke, game over!");
                         gameRunning = false;
                     }else{
-                        System.out.println("Do you want to play again? Y/N");
-                        String playerChoice = bufferedReader.readLine().toLowerCase();
-                        if(playerChoice.equals("n")){
-                            System.out.println(String.format("Your final bank is %d", playerBank));
-                            System.out.println("Thanks for playing!");
-                            gameRunning = false;
+                        boolean playAgain = true;
+                        while(playAgain){
+                            System.out.println("Do you want to play again? Y/N");
+                            String playerChoice = bufferedReader.readLine().toLowerCase();
+                            if(playerChoice.equals("n")){
+                                System.out.println(String.format("Your final bank is %d", playerBank));
+                                System.out.println("Thanks for playing!");
+                                gameRunning = false;
+                                playAgain = false;
+                            }else if(playerChoice.equals("y")){
+                                playAgain = false;
+                            }else{
+                                System.out.println("I don't understand that command. Try Again");
+                            }
                         }
+
                     }
 
                 } else if (gameAction.equals("exit")) {
